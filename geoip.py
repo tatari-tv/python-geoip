@@ -73,6 +73,13 @@ class IPInfo(object):
         self._data = data
 
     @property
+    def city(self):
+        """The city code as ISO code if available."""
+        if 'city' in self._data:
+            #print(self._data['city'])
+            return _native_str(self._data['city']['names']['en'])
+
+    @property
     def country(self):
         """The country code as ISO code if available."""
         if 'country' in self._data:
@@ -113,6 +120,7 @@ class IPInfo(object):
         """
         return {
             'ip': self.ip,
+            'city': self.city,
             'country': self.country,
             'continent': self.continent,
             'subdivisions': self.subdivisions,
@@ -136,9 +144,10 @@ class IPInfo(object):
         return not self.__eq__(other)
 
     def __repr__(self):
-        return ('<IPInfo ip=%r country=%r continent=%r '
+        return ('<IPInfo ip=%r city=%r country=%r continent=%r '
                 'subdivisions=%r timezone=%r location=%r>') % (
             self.ip,
+            self.city,
             self.country,
             self.continent,
             self.subdivisions,
